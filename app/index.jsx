@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FAB,} from "react-native-paper";
+import { FAB } from "react-native-paper";
 import {
   View,
   Text,
@@ -168,7 +168,7 @@ export default function HomeScreen() {
               ))}
             </View>
             <Pressable onPress={addOrEditContact} style={{ marginBottom: 8 }}>
-              <Text style={{ color: "#6200ee", textAlign: "center" }}>
+              <Text style={{ color: "#000", textAlign: "center" }}>
                 {editIndex === null ? "Adicionar" : "Salvar alterações"}
               </Text>
             </Pressable>
@@ -182,11 +182,17 @@ export default function HomeScreen() {
       </Modal>
       <FAB
         icon="plus"
-        onPress={() => setModalVisible(true)}
+        color="#fff"
+        onPress={() => {
+          setNewContact({ name: "", phone: "", category: "trabalho" });
+          setEditIndex(null);
+          setModalVisible(true);
+        }}
         style={{
           position: "absolute",
           right: 16,
           bottom: 16,
+          backgroundColor: "#87c4bc",
         }}
       />
     </View>
