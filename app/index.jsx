@@ -47,16 +47,14 @@ export default function HomeScreen() {
 
   // Função para confirmar exclusão de contato
   function confirmDelete(index) {
-    Alert.alert("Excluir contato?", `Remover "${contacts[index].name}"?`, [
+    Alert.alert("Excluir Contato?", `Remover "${contacts[index]}"?`, [
       { text: "Cancelar", style: "cancel" },
       {
         text: "Excluir",
         style: "destructive",
         onPress: () => {
-          // Cria uma cópia do array e remove o contato
-          const updated = [...contacts];
-          updated.splice(index, 1);
-          setContacts(updated);
+          contacts.splice(index, 1); // Remove a contato diretamente do array
+          setContacts(contacts); // Atualiza o estado com a lista modificada
         },
       },
     ]);
