@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FAB,} from "react-native-paper";
 import {
   View,
   Text,
@@ -46,24 +47,20 @@ export default function HomeScreen() {
 
   // Função para confirmar exclusão de contato
   function confirmDelete(index) {
-    Alert.alert(
-      "Excluir contato?",
-      `Remover "${contacts[index].name}"?`,
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Excluir",
-          style: "destructive",
-          onPress: () => {
-            const updated = [...contacts];
-            updated.splice(index, 1);
-            setContacts(updated);
-          },
+    Alert.alert("Excluir contato?", `Remover "${contacts[index].name}"?`, [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Excluir",
+        style: "destructive",
+        onPress: () => {
+          // Cria uma cópia do array e remove o contato
+          const updated = [...contacts];
+          updated.splice(index, 1);
+          setContacts(updated);
         },
-      ]
-    );
+      },
+    ]);
   }
-
   // Função para abrir o modal em modo de edição
   function openEditModal(index) {
     setNewContact(contacts[index]);
@@ -102,13 +99,13 @@ export default function HomeScreen() {
                 onPress={() => openEditModal(index)}
                 style={[styles.contactButton, styles.editButton]}
               >
-                <Text style={styles.buttonText}>✏️</Text>
+                <Text style={styles.buttonText}>EDITAR CONTATO</Text>
               </Pressable>
               <Pressable
                 onPress={() => confirmDelete(index)}
                 style={[styles.contactButton, styles.deleteButton]}
               >
-                <Text style={styles.buttonText}>🗑️</Text>
+                <Text style={styles.buttonText}>DELETAR CONTATO</Text>
               </Pressable>
             </View>
           </View>
@@ -134,17 +131,13 @@ export default function HomeScreen() {
             </Text>
             <TextInput
               value={newContact.name}
-              onChangeText={name =>
-                setNewContact({ ...newContact, name })
-              }
+              onChangeText={(name) => setNewContact({ ...newContact, name })}
               placeholder="Nome"
               style={styles.input}
             />
             <TextInput
               value={newContact.phone}
-              onChangeText={phone =>
-                setNewContact({ ...newContact, phone })
-              }
+              onChangeText={(phone) => setNewContact({ ...newContact, phone })}
               placeholder="Telefone"
               keyboardType="phone-pad"
               style={styles.input}
@@ -152,7 +145,7 @@ export default function HomeScreen() {
             <Text style={{ marginBottom: 4 }}>Categoria:</Text>
             {/* Simples seleção de categoria */}
             <View style={{ flexDirection: "row", marginBottom: 12 }}>
-              {["trabalho", "pessoal", "familia"].map(cat => (
+              {["trabalho", "pessoal", "familia"].map((cat) => (
                 <Pressable
                   key={cat}
                   onPress={() =>
@@ -160,13 +153,13 @@ export default function HomeScreen() {
                   }
                   style={[
                     styles.categoryButton,
-                    newContact.category === cat && styles.categoryButtonSelected,
+                    newContact.category === cat &&
+                      styles.categoryButtonSelected,
                   ]}
                 >
                   <Text
                     style={{
-                      color:
-                        newContact.category === cat ? "#fff" : "#333",
+                      color: newContact.category === cat ? "#fff" : "#333",
                     }}
                   >
                     {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -187,6 +180,15 @@ export default function HomeScreen() {
           </View>
         </View>
       </Modal>
+      <FAB
+        icon="plus"
+        onPress={() => setModalVisible(true)}
+        style={{
+          position: "absolute",
+          right: 16,
+          bottom: 16,
+        }}
+      />
     </View>
   );
 }

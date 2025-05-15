@@ -16,7 +16,7 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "📝 TaskMaster",
+          title: "🧾 Meus Contatos",
           headerRight: () => (
             <Pressable
               onPress={() => router.push("/settings")} // Navegação para a tela de configurações
