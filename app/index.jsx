@@ -47,14 +47,14 @@ export default function HomeScreen() {
 
   // Função para confirmar exclusão de contato
   function confirmDelete(index) {
-    Alert.alert("Excluir Contato?", `Remover "${contacts[index]}"?`, [
+    Alert.alert("Excluir Contato?", `Remover "${contacts[index]?.name}"?`, [
       { text: "Cancelar", style: "cancel" },
       {
         text: "Excluir",
         style: "destructive",
         onPress: () => {
-          contacts.splice(index, 1); // Remove a contato diretamente do array
-          setContacts(contacts); // Atualiza o estado com a lista modificada
+          const updatedContacts = contacts.filter((_, i) => i !== index);
+          setContacts(updatedContacts);
         },
       },
     ]);
@@ -68,18 +68,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Botão para abrir o modal */}
-      <Pressable
-        onPress={() => {
-          setNewContact({ name: "", phone: "", category: "trabalho" });
-          setEditIndex(null);
-          setModalVisible(true);
-        }}
-        style={styles.addButton}
-      >
-        <Text style={styles.addButtonText}>＋ Novo Contato</Text>
-      </Pressable>
-
       {/* Lista de contatos */}
       <FlatList
         data={contacts}
