@@ -10,6 +10,7 @@ import {
   Alert,
   StyleSheet,
 } from "react-native";
+import { Avatar } from "react-native-paper";
 
 // Componente principal da tela de contatos
 export default function HomeScreen() {
@@ -74,6 +75,11 @@ export default function HomeScreen() {
         keyExtractor={(_, i) => String(i)}
         renderItem={({ item, index }) => (
           <View style={styles.contactItemContainer}>
+            <Avatar.Text
+              label={item.name ? item.name.charAt(0).toUpperCase() : "?"}
+              size={40}
+              style={{ marginRight: 12, backgroundColor: "#87c4bc" }}
+            />
             <View style={{ flex: 1 }}>
               <Text style={styles.contactItem}>{item.name}</Text>
               <Text style={{ color: "#555" }}>{item.phone}</Text>
@@ -85,13 +91,13 @@ export default function HomeScreen() {
                 onPress={() => openEditModal(index)}
                 style={[styles.contactButton, styles.editButton]}
               >
-                <Text style={styles.buttonText}>EDITAR CONTATO</Text>
+                <Text style={styles.buttonText}>✏️</Text>
               </Pressable>
               <Pressable
                 onPress={() => confirmDelete(index)}
                 style={[styles.contactButton, styles.deleteButton]}
               >
-                <Text style={styles.buttonText}>DELETAR CONTATO</Text>
+                <Text style={styles.buttonText}>🗑️</Text>
               </Pressable>
             </View>
           </View>
@@ -110,7 +116,7 @@ export default function HomeScreen() {
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalContent}>
-            <Text style={{ marginBottom: 8 }}>
+            <Text style={styles.addTitle}>
               {editIndex === null
                 ? "Digite os dados do novo contato:"
                 : "Edite o contato:"}
@@ -128,9 +134,9 @@ export default function HomeScreen() {
               keyboardType="phone-pad"
               style={styles.input}
             />
-            <Text style={{ marginBottom: 4 }}>Categoria:</Text>
+            <Text style={styles.addTitle}>Categoria:</Text>
             {/* Simples seleção de categoria */}
-            <View style={{ flexDirection: "row", marginBottom: 12 }}>
+            <View style={styles.buttonCategoryContainer}>
               {["trabalho", "pessoal", "familia"].map((cat) => (
                 <Pressable
                   key={cat}
@@ -154,14 +160,12 @@ export default function HomeScreen() {
               ))}
             </View>
             <Pressable onPress={addOrEditContact} style={{ marginBottom: 8 }}>
-              <Text style={{ color: "#000", textAlign: "center" }}>
+              <Text style={styles.addContact}>
                 {editIndex === null ? "Adicionar" : "Salvar alterações"}
               </Text>
             </Pressable>
             <Pressable onPress={() => setModalVisible(false)}>
-              <Text style={{ color: "#999", textAlign: "center" }}>
-                Cancelar
-              </Text>
+              <Text style={styles.buttonCancel}>Cancelar</Text>
             </Pressable>
           </View>
         </View>
@@ -260,13 +264,33 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#ccc",
     marginRight: 8,
-    backgroundColor: "#eee",
+    backgroundColor: "#d4d4d4",
   },
   categoryButtonSelected: {
-    backgroundColor: "#04574c",
-    borderColor: "#04574c",
+    backgroundColor: "#5c8a83",
+  },
+  addTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  buttonCategoryContainer: {
+    flexDirection: "row",
+    marginBottom: 12,
+  },
+  addContact: {
+    backgroundColor: "#4a756f",
+    color: "#fff",
+    textAlign: "center",
+    borderRadius: 6,
+    padding: 5,
+  },
+  buttonCancel: {
+    backgroundColor: "#c3d6d3",
+    borderRadius: 6,
+    padding: 5,
+    color: "#000",
+    textAlign: "center",
   },
 });
